@@ -54,5 +54,11 @@ class ClothingItem(models.Model):
 
 
 class ClothingItemSize(models.Model):
-    clothing_item = models.ForeignKey(ClothingItem, on_delete=models)
-    
+    clothing_item = models.ForeignKey(ClothingItem, on_delete=models.CASCADE)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE )
+    available= models.BooleanField(default=True, )
+
+
+    class Meta:
+        unique_together = ('clothing_item', 
+                            'size')
