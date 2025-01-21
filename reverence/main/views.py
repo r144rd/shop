@@ -3,7 +3,7 @@ from django.views.generic import ListView, DetailView
 from .models import ClothingItem , Category, Size
 from django.db.models import Q
 
-class CatalogView(LisView):
+class CatalogView(ListView):
     model = ClothingItem
     template_name = 'main/product/list.html'
     context_object_name = 'cloting_items'
@@ -47,4 +47,3 @@ class ClothingItemDetailView(DetailView):
     context_object_name = 'clothing_item'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
-    
