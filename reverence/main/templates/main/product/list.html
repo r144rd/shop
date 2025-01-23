@@ -12,7 +12,7 @@
 {% block content %}
     <h1 class="rev-head text-uppercase" id="reverence-title">reverence interlude -all</h1>
     <div class="catalog d-flex">
-        <form action='{% url 'main:catalog' %}' method="get" class="sidebar" id="">
+        <form action="{% url 'main:catalog' %}" method="get" class="sidebar" id="">
             <h4 class="price-head">Price Range:</h4>
             <div class="price-range">
                 <input type="number" name="min_price" id="min_price"
@@ -40,7 +40,7 @@
                 
                 {% for size in sizes %}
                     <div class="category-option">
-                        <input type="text" name="size" id="size-{{size.name}}" value="{{size.name}}"
+                        <input type="checkbox" name="size" id="size-{{size.name}}" value="{{size.name}}"
                         
                         {% if size.name in selected_sizes %}
                             checked
@@ -74,5 +74,58 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const checkboxes = document.querySelectorAll('.category-option input[type = "checkbox"]');
+            const form = document.getElementById('filter-form');
+
+            checkboxes.forEach(checkbox =>{
+                checkbox.addEventListener('change',function(){
+                    form.submit();
+
+                });
+            });
+        });
+
+
+        let timeout;
+        function debounceAppleFilters(){
+            clearTimeout(timeout);
+            timeout= setTimeout(()=>{
+                const form=document.getElementById('filter-form');
+                form.submit();
+            },1000);
+        }
+        
+
+
+        function applyFilters(){
+            const form = document.getElementById('filter-form');
+            form.submit();
+            updateTitle();
+
+        }
+
+
+        function updateTitle(){
+            const checkboxes = document.querySelectorAll('input[name = "category"]:checked')
+            const titleElement = document.getElementById('reverence-title');
+
+            if(checkboxes.length > 0 ){
+                const selected_categories = Array.form(checkboxex).map(checkbox =>{
+                    const categoryText = checkbox.nextElementSibliing.textContent.trim();
+                    return categoryText
+                });
+                titleElement.textContent= `REVERENCE INTERLUDE - ${selectedCategories.join(', ')}`
+            }else{
+                titleElement.textContent = "REVERENCE INTERLUDE ALL"
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded',updateTitle);
+
+    </script>
 {% endblock content %}
     
