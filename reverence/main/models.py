@@ -37,6 +37,8 @@ class ClothingItem(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE , related_name='clothing_items')
     description = models.TextField(max_length=500, blank=True)
 
+    image = models.ImageField(upload_to='procuct/%Y/%m/%d' ,blank=True)
+
     created_at = models.DateTimeField(auto_now_add= True, null = True)
     updated_at = models.DateTimeField(auto_now=True, )
     price = models.DecimalField(max_digits=20, decimal_places=2)

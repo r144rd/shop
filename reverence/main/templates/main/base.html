@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +66,12 @@
         event.preventDefault();
         const = searchPopup=document.getElementsById('search-popup');
 
-        if(searchPopup.style.display === 'none'|| searchPopup.style.display === )
+        if(searchPopup.style.display === 'none'|| searchPopup.style.display === ''){
+            researhPopup.style.display = "block";
+
+        }else{
+            searchPopup.style.display = "none";
+        }
     })
 
 </script>
