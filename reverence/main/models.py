@@ -24,6 +24,9 @@ class Category(models.Model):
         verbose_name = 'category'
         verbose_name_plural = 'categories'
 
+    def get_item_count(self):
+        return ClothingItem.objects.filter(category = self).count
+
 
 
 
@@ -32,7 +35,7 @@ class ClothingItem(models.Model):
     slug = models.SlugField(unique=True)
     available = models.BooleanField(default=True)
     sizes = models.ManyToManyField(Size, through='ClothingItemSize',
-                                related_name='clothing_item', blank=True    )
+                                related_name='clothing_item', blank=True)
     
     category = models.ForeignKey(Category, on_delete=models.CASCADE , related_name='clothing_items')
     description = models.TextField(max_length=500, blank=True)
@@ -64,3 +67,13 @@ class ClothingItemSize(models.Model):
     class Meta:
         unique_together = ('clothing_item', 
                             'size')
+        
+
+
+class ItemImage(models.Model):
+    product = models.ForeignKey(ClothingItem, related_name='images',
+                                on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='product/Y%/%m/%d',blank=True)
+
+    def __str__(self):
+        return f'{self.product.name} - {self.image.name}'
