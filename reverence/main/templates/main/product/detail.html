@@ -30,28 +30,68 @@
     <script>
         const images = document.querySelectorAll('.detail-image')
         const prevBtn= document.querySelector('.prev-btn')
-        const prevBtn= document.querySelector('.next-btn')
+        const nextBtn= document.querySelector('.next-btn')
         let currentIndex = 0;
         images[currentIndex].style.display = block
 
 
-        if(images === 3){
-            prevBtn.style.display = none
-            nextBtn.style.display = none
-        }else{
-            prevBtn.addEventListener('click',() =>{
-                images[currentIndex],style.display = 'none';
-                currentIndex= (currentIndex -1 +image.length) % images.length;
-                images[currentIndex].style.display = 'block';
-            })
-            nextBtn.addEventListener('click',() =>{
-                images[currentIndex],style.display = 'none';
-                currentIndex= (currentIndex -1 ) % images.length;
-                images[currentIndex].style.display = 'block';
-            })
+        if (images.length > 0) {
+            images[currentIndex].style.display = 'block';
+    
+            if (images.length === 1) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+            } else {
+                prevBtn.addEventListener('click', () => {
+                    images[currentIndex].style.display = 'none';
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    images[currentIndex].style.display = 'block';
+                });
+    
+                nextBtn.addEventListener('click', () => {
+                    images[currentIndex].style.display = 'none';
+                    currentIndex = (currentIndex + 1) % images.length; 
+                    images[currentIndex].style.display = 'block';
+                });
+            }
         }
     </script>
+
+    <div class="detail-description">
+        <h2>{{clothing_item.name}}</h2>
+        <h3 class="item-desc">{{clothing_item.description | linebreaks}}</h3>
+        <div class="sizes">
+            <p>Available sizes
+                <ul class="sizes-list d-flex gap-3">
+                    
+                    {% for item_size in available_sizes %}
+                        <li class="size-name d-flex justify-content-center align-items-center" 
+                        data-size = "{{item_size.size.name}}">
+                        {{item_size.size.name}}
+                        </li>
+                        {% empty %}
+                        <li> no available sizes</li>
+                    {% endfor %}
+                        
+                </ul>
+            </p>
+        </div>
+        
+        {% if clothing_item.discount %}
+            <div class="cart-discount d-flex gap-2">
+                <p class="line">${{clothing_item.price}}</p>
+                <p class="price">${{ clothing_item.get_price_with_discount }}</p>
+
+            </div>
+            {% else %}
+            <p class="detail_price"> {{clothing_item.price}} </p>
+        {% endif %}
+            
+    </div>
 </div>
+
+
+
 
 {% endblock content %}
     

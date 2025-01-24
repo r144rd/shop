@@ -62,20 +62,17 @@
 </div>
 
 <script>
-    document.getElementsById('toggle-search').addEventListener('click',function(event){
+    document.getElementById('toggle-search').addEventListener('click', function(event) {
         event.preventDefault();
-        const = searchPopup=document.getElementsById('search-popup');
+        const searchPopup = document.getElementById('search-popup');
 
-        if(searchPopup.style.display === 'none'|| searchPopup.style.display === ''){
-            researhPopup.style.display = "block";
-
-        }else{
-            searchPopup.style.display = "none";
+        if (searchPopup.style.display === 'none' || searchPopup.style.display === '') {
+            searchPopup.style.display = 'block';
+        } else {
+            searchPopup.style.display = 'none';
         }
     })
-
 </script>
-
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
